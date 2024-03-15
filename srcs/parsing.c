@@ -6,24 +6,20 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/14 01:51:58 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/15 04:33:06 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-
-int	check_if_only_numbers(char *arg)
+int	check_for_zeros(char *str)
 {
-	int	i;
-
-	i = 0;
-	while (arg[i] != '\0')
-	{
-		if (!ft_isdigit(arg[i]))
-			return (0);
-		i++;
-	}
+	if (*str == '+' || *str == '-')
+		str++;
+	while (*str == '0')
+		str++;
+	if (*str != '\0')
+		return (0);
 	return (1);
 }
 
@@ -34,8 +30,12 @@ int	check_for_non_numbers(char **argv)
 	i = 1;
 	while (argv[i] != NULL)
 	{
-		if (!check_if_only_numbers(argv[i]))
-			return (0);
+		// printf("atoi = %d | trim = %s | strcmp = %d\n",ft_atoi(argv[i]), ft_trim(argv[i]),ft_strcmp(ft_trim(argv[i]), "0"));
+		if (ft_atoi(argv[i]) == 0)
+		{
+			if (!check_for_zeros(ft_trim(argv[i])))
+				return (0);
+		}
 		i++;
 	}
 	return (1);
@@ -51,6 +51,11 @@ int	parsing(char **argv)
 	if (ft_atoi(argv[1]) > 200)
 	{
 		printf("The number of philosophers cannot be more the 200!\n");
+		return (0);
+	}
+	if (ft_atoi(argv[2]) < 60 || ft_atoi(argv[3]) < 60 || ft_atoi(argv[4]) < 60)
+	{
+		printf("Time_to_die or time_to_eat or time_to_sleep values cannot be lower than 60 ms!\n");
 		return (0);
 	}
 	return (1);

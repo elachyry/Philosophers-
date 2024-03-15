@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   ft_trim.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 21:57:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/15 04:25:23 by melachyr         ###   ########.fr       */
+/*   Created: 2024/03/15 04:00:57 by melachyr          #+#    #+#             */
+/*   Updated: 2024/03/15 04:01:22 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../../includes/philo.h"
 
-int	main(int argc, char **argv)
+int	is_white_spaces(char c)
 {
-	if (argc != 5 && argc != 6)
+	if ((c >= 9 && c <= 13) || c == 32)
 		return (1);
-	if (!parsing(argv))
-		return (1);
+	return (0);
+}
+
+char	*ft_trim(char *str)
+{
+	char	*end;
+
+	while (is_white_spaces(*str))
+		str++;
+	if (*str == '\0')
+		return (str);
+	end = str + (ft_strlen(str) - 1);
+	while (end > str && is_white_spaces(*end))
+		end--;
+	*(end + 1) = '\0';
+	return (str);
 }
