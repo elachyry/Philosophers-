@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 21:57:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/17 18:33:57 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:40:03 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int	main(int argc, char **argv)
 		return (1);
 	init_variables(&data, argv);
 	start_program(&data);
-	free_data(&data);
+	if (!free_data(&data))
+		return (1);
+	return (0);
 }
 	// printf("number_of_philo %zu\n", data.number_of_philo);
 	// printf("time_to_die %zu\n", data.time_to_die);

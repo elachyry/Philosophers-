@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/19 03:02:38 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:39:30 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int		parsing(char **argv);
 void	init_variables(t_data *data, char **argv);
 
 //free data
-void	free_data(t_data *data);
+int		free_data(t_data *data);
 
 //start program
 int		start_program(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:34:31 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/19 04:10:16 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/20 02:30:20 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,17 @@ int	check_if_somone_died(t_philo *philo)
 	size_t	last_meal_time;
 	int		is_finished;
 
-	is_finished = get_int_mutex(&philo->data->mutex_2, &philo->is_finished);
+	// is_finished = get_int_mutex(&philo->data->mutex_2, &philo->is_finished);
+	is_finished = philo->is_finished;
 	// printf("I'm in!!\n");
-	if (is_finished == -1)
-		return (-1);
-	else if (is_finished == 1)
+	// if (is_finished == -1)
+	// 	return (-1);
+	if (is_finished == 1)
 		return (0);
-	last_meal_time = get_sizet_mutex(&philo->data->mutex_2, &philo->last_meal_time);
-	if (last_meal_time == -1)
-		return (-1);
+	last_meal_time = philo->last_meal_time;
+	// last_meal_time = get_sizet_mutex(&philo->data->mutex_2, &philo->last_meal_time);
+	// if (last_meal_time == -1)
+	// 	return (-1);
 	// printf("last meal time = %zu\n", last_meal_time);
 	time_stamp = get_current_time() - last_meal_time;
 	// printf("timestamp = %zu | time to die = %zu | philo %d\n", time_stamp, philo->data->time_to_die, philo->id);
