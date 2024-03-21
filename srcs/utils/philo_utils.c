@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 18:21:39 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 07:09:02 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:21:33 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	philo_eating(t_philo *philo)
 {
-	if (!lock_mutex(&philo->right_fork->fork, 5))
+	if (!lock_mutex(&philo->right_fork->fork))
 		return (0);
 	philo_taken_fork_printing(philo);
-	if (!lock_mutex(&philo->left_fork->fork, 6))
+	if (!lock_mutex(&philo->left_fork->fork))
 	{
 		unlock_mutex(&philo->right_fork->fork);
 		return (0);

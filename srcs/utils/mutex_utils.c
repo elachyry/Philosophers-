@@ -6,17 +6,17 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:33:07 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 07:11:47 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:49:29 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo.h"
 
-int	lock_mutex(pthread_mutex_t *mutex, int place)
+int	lock_mutex(pthread_mutex_t *mutex)
 {
 	if (pthread_mutex_lock(mutex) != 0)
 	{
-		printf("Mutex lock error in %d!\n", place);
+		ft_putstr_fd("Mutex lock error!\n", 2);
 		return (0);
 	}
 	return (1);
@@ -26,7 +26,7 @@ int	unlock_mutex(pthread_mutex_t *mutex)
 {
 	if (pthread_mutex_unlock(mutex) != 0)
 	{
-		printf("Mutex unlock error!\n");
+		ft_putstr_fd("Mutex unlock error!\n", 2);
 		return (0);
 	}
 	return (1);
@@ -34,7 +34,7 @@ int	unlock_mutex(pthread_mutex_t *mutex)
 
 int	increment_int_mutex(pthread_mutex_t *mutex, int *var, int val)
 {
-	if (!lock_mutex(mutex, 1))
+	if (!lock_mutex(mutex))
 		return (0);
 	*var += val;
 	if (!unlock_mutex(mutex))

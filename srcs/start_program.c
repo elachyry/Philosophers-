@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:34:29 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 07:03:14 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:17:43 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void	*philos_routine(void *arg)
 {
 	t_philo	*philo;
-	int		result;
 
 	philo = (t_philo *)arg;
-	result = 0;
 	while (!philo->data->is_all_thread_created)
 		;
 	philo->last_meal_time = get_current_time();
@@ -42,16 +40,13 @@ void	*philos_routine(void *arg)
 void	*one_philo_routine(void *arg)
 {
 	t_philo	*philo;
-	int		result;
 
 	philo = (t_philo *)arg;
-	result = 0;
 	while (!philo->data->is_all_thread_created)
 		;
 	philo->last_meal_time = get_current_time();
 	philo->data->running_threads++;
 	philo_taken_fork_printing(philo);
-	result = 0;
 	while (!philo->data->is_someone_died)
 		usleep(200);
 	return (NULL);
@@ -59,8 +54,6 @@ void	*one_philo_routine(void *arg)
 
 int	start_program(t_data *data)
 {
-	int	i;
-
 	if (data->nbr_time_must_eat == 0)
 		return (1);
 	if (!create_philos_threads(data))

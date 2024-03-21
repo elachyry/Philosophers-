@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:28:52 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 07:08:30 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:50:32 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	init_data(t_data *data, char **argv)
 	data->is_someone_died = 0;
 	if (pthread_mutex_init(&data->mutex, NULL) != 0)
 	{
-		printf("Mutex error!");
+		ft_putstr_fd("Mutex error!\n", 2);
 		return (0);
 	}
 	if (argv[5] != NULL)
@@ -47,7 +47,7 @@ int	init_forks(t_data *data)
 		data->forks[i].id = i + 1;
 		if (pthread_mutex_init(&data->forks[i].fork, NULL) != 0)
 		{
-			printf("Mutex error!");
+			ft_putstr_fd("Mutex error!\n", 2);
 			return (0);
 		}
 		i++;
@@ -81,7 +81,7 @@ int	init_philos(t_data *data)
 		data->philos[i].data = data;
 		if (pthread_mutex_init(&data->philos[i].philo_mutex, NULL) != 0)
 		{
-			printf("Mutex error!");
+			ft_putstr_fd("Mutex error!\n", 2);
 			return (0);
 		}
 		forks_affectation(data, i);

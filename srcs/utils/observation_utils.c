@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:34:31 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 07:01:17 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:51:51 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_all_threads_starting(t_data *data)
 	int	result;
 
 	result = 0;
-	if (!lock_mutex(&data->mutex, 12))
+	if (!lock_mutex(&data->mutex))
 		return (-1);
 	if (data->running_threads == data->number_of_philo)
 		result = 1;
@@ -55,7 +55,7 @@ void	*observation_routine(void *arg)
 		result = is_all_threads_starting(data);
 		if (result == -1)
 		{
-			write(2, "Error!\n", 7);
+			ft_putstr_fd("Error\n", 2);
 			return ((void *)-1);
 		}
 	}

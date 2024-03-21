@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 21:57:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 06:45:57 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:44:17 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ int	main(int argc, char **argv)
 	int		result;
 
 	if (argc != 5 && argc != 6)
-		result = 1;
+	{
+		ft_putstr_fd("args must be 4 or 5!\n", 2);
+		return (1);
+	}
 	result = 0;
 	if (!parsing(argv))
-		result = 1;
+		return (1);
 	if (!init_variables(&data, argv))
 		result = 1;
-	if (!start_program(&data))
+	if (!result && !start_program(&data))
 		result = 1;
 	if (!free_data(&data))
 		result = 1;

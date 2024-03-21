@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 07:12:13 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:33:13 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	t_fork			*right_fork;
 	t_fork			*left_fork;
-	size_t			number_of_meals;
+	int				number_of_meals;
 	int				is_finished;
 	pthread_mutex_t	philo_mutex;
 	size_t			last_meal_time;
@@ -46,7 +46,7 @@ typedef struct s_philo
 //data struct
 typedef struct s_data
 {
-	size_t			number_of_philo;
+	int				number_of_philo;
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
@@ -67,6 +67,7 @@ int		ft_isdigit(int c);
 int		ft_strcmp(const char *str1, const char *str2);
 int		ft_strlen(const char *str);
 char	*ft_trim(char *str);
+void	ft_putstr_fd(char *s, int fd);
 
 //parsing
 int		parsing(char **argv);
@@ -106,7 +107,7 @@ int		ft_usleep(size_t milliseconds);
 size_t	get_current_time(void);
 
 //mutex utils
-int		lock_mutex(pthread_mutex_t *mutex, int place);
+int		lock_mutex(pthread_mutex_t *mutex);
 int		unlock_mutex(pthread_mutex_t *mutex);
 int		increment_int_mutex(pthread_mutex_t *mutex, int *var, int val);
 

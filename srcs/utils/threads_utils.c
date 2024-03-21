@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 02:21:25 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 03:37:21 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:48:41 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	create_philos_threads(t_data *data)
 		if (pthread_create(&data->philos[0].thread, NULL,
 				&one_philo_routine, &data->philos[0]) != 0)
 		{
-			printf("Thread creation error!\n");
+			ft_putstr_fd("Thread creation error!\n", 2);
 			return (0);
 		}
 	}
@@ -33,7 +33,7 @@ int	create_philos_threads(t_data *data)
 			if (pthread_create(&data->philos[i].thread, NULL,
 					&philos_routine, &data->philos[i]) != 0)
 			{
-				printf("Thread creation error!\n");
+				ft_putstr_fd("Thread creation error!\n", 2);
 				return (0);
 			}
 		}
@@ -46,7 +46,7 @@ int	create_observation_thread(t_data *data)
 	if (pthread_create(&data->monitor, NULL,
 			&observation_routine, data) != 0)
 	{
-		printf("Thread creation error!\n");
+		ft_putstr_fd("Thread creation error!\n", 2);
 		return (0);
 	}
 	return (1);
@@ -62,7 +62,7 @@ int	join_philos_threads(t_data *data)
 	{
 		if (pthread_join(data->philos[i].thread, &result) != 0)
 		{
-			printf("Thread join error!\n");
+			ft_putstr_fd("Thread join error!\n", 2);
 			return (0);
 		}
 		if (result == (void *)-1)
@@ -78,7 +78,7 @@ int	join_observation_threads(t_data *data)
 
 	if (pthread_join(data->monitor, &result) != 0)
 	{
-		printf("Thread join error!\n");
+		ft_putstr_fd("Thread join error!\n", 2);
 		return (0);
 	}
 	if (result == (void *)-1)
