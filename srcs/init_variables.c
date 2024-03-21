@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:28:52 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/19 03:06:54 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:21:42 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ void	init_data(t_data *data, char **argv)
 	data->running_threads = 0;
 	data->is_someone_died = 0;
 	if (pthread_mutex_init(&data->mutex, NULL) != 0
-		|| pthread_mutex_init(&data->mutex_2, NULL) != 0
-		|| pthread_mutex_init(&data->mutex_3, NULL) != 0
-		|| pthread_mutex_init(&data->mutex_4, NULL) != 0)
+		|| pthread_mutex_init(&data->mutex_2, NULL) != 0)
 	{
 		printf("Mutex error!");
 		return ;

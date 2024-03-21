@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:11:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/20 02:42:39 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:21:47 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ int	free_data(t_data *data)
 			return (0);
 	}
 	if (!destroy_mutex(&data->mutex, -1)
-		|| !destroy_mutex(&data->mutex_2, -2)
-		|| !destroy_mutex(&data->mutex_3, -3)
-		|| !destroy_mutex(&data->mutex_4, -4))
+		|| !destroy_mutex(&data->mutex_2, -2))
 		return (0);
 	free(data->forks);
 	free(data->philos);

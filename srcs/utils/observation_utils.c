@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:34:31 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/20 02:30:20 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:27:30 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,14 @@ int	is_all_threads_starting(t_data *data)
 	int	result;
 	
 	result = 0;
-	if (!lock_mutex(&data->mutex_3, 12))
+	if (!lock_mutex(&data->mutex, 12))
 		return (-1);
-	result = get_int_mutex(&data->mutex_4, &data->running_threads);
-	if (result == data->number_of_philo)
-		return (1);
+	result = data->running_threads;
 	if (result == data->number_of_philo)
 		result = 1;
 	else
 		result = 0;
-	if (!unlock_mutex(&data->mutex_3))
+	if (!unlock_mutex(&data->mutex))
 		return (-1);
 	return (result);
 }
@@ -91,8 +89,9 @@ void	*start_observation(void *arg)
 			// printf("result %d\n", i);
 			if (check_if_somone_died(data->philos + i))
 			{
-				if (!set_int_mutex(&data->mutex_2, &data->is_someone_died, 1))
-					return ((void *)-1);
+				// if (!set_int_mutex(&data->mutex_2, &data->is_someone_died, 1))
+				// 	return ((void *)-1);
+				data->is_someone_died = 1;
 				philo_died_printing(data->philos + i);
 			}
 			// result = is_someone_died(data);

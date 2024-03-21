@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:46:44 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/20 01:24:18 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:37:38 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ void	philo_thinking_printing(t_philo *philo)
 
 	if (philo->is_finished)
 		return ;
-	someone_died = is_someone_died(philo->data);
-	if (someone_died == -1)
-		return ;
+	// someone_died = is_someone_died(philo->data);
+	// if (someone_died == -1)
+	// 	return ;
 	time_stamp = get_current_time() - philo->data->started_time;
 	lock_mutex(&philo->philo_mutex, 10);
-	if (!someone_died)
+	if (!philo->data->is_someone_died)
 		printf("%zu %d is thinking\n", time_stamp, philo->id);
 	unlock_mutex(&philo->philo_mutex);
 }

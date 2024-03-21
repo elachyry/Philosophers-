@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:34:29 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/20 02:26:07 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/20 04:21:56 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,37 +33,44 @@ void	*start_eating(void *arg)
 
 	philo = (t_philo *)arg;
 	result = 0;
-	while (!philo->data->is_all_thread_created)
-	{
-		// result = get_int_mutex(&philo->data->mutex,
-		// 		&philo->data->is_all_thread_created);
-		// result = philo->data->is_all_thread_created;
-		// if (result == -1)
-		// {
-		// 	write(2, "Error1!\n", 7);
-		// 	return ((void *)-1);
-		// }
-	}
-	// if (!set_sizet_mutex(&philo->data->mutex_2, &philo->last_meal_time, get_current_time()))
-	// 	return ((void *)-1);
+	while (!philo->data->is_all_thread_created);
+
 	philo->last_meal_time = get_current_time();
 	if (!increment_int_mutex(&philo->data->mutex,
 		&philo->data->running_threads, 1))
 		return ((void *)-1);
-	// printf("running_threads = %d\n", get_int_mutex(&philo->data->mutex_2, &philo->data->running_threads));
-	// result = 0;
-	while (!is_someone_died(philo->data))
+	while (!philo->data->is_someone_died)
 	{
-		// result = is_someone_died(philo->data);
-		// printf("someone died = %d\n", result);
-		// if (result == -1)
-		// {
-		// 	write(2, "Error!\n", 7);
-		// 	return ((void *)-1);
-		// }
+		// printf("\n\nthe philo number %d eat %d times\n\n", philo->id, philo->number_of_meals);
 		if (philo->is_finished)
 			break ;
-		philo_eating(philo);
+		if (!lock_mutex(&philo->first_fork->fork, 5))
+            continue;
+
+        philo_taken_fork_printing(philo);
+
+        // Attempt to acquire second fork
+        if (!lock_mutex(&philo->second_fork->fork, 6)) {
+            unlock_mutex(&philo->first_fork->fork); // Release first fork if failed to acquire second fork
+            continue;
+        }
+
+        philo_taken_fork_printing(philo);
+
+        philo->last_meal_time = get_current_time();
+        philo->number_of_meals++;
+        philo_eating_printing(philo);
+        ft_usleep(philo->data->time_to_eat);
+		if (philo->data->nbr_time_must_eat != -1
+		&& philo->number_of_meals == philo->data->nbr_time_must_eat)
+		{
+			philo->is_finished = 1;
+			// if (!set_int_mutex(&philo->philo_mutex, &philo->is_finished, 1))
+			// 	return ;
+		}
+        unlock_mutex(&philo->first_fork->fork);
+        unlock_mutex(&philo->second_fork->fork);
+		// philo_eating(philo);
 		philo_sleeping(philo);
 		philo_thinking(philo);
 	}
@@ -159,8 +166,9 @@ int	start_program(t_data *data)
 		}
 		i++;
 	}
-	if (!set_int_mutex(&data->mutex_2, &data->is_someone_died, 1))
-		return (0);
+	// if (!set_int_mutex(&data->mutex_2, &data->is_someone_died, 1))
+	// 	return (0);
+	data->is_someone_died = 1;
 	if (pthread_join(data->monitor, NULL) != 0)
 	{
 		printf("Thread join error!\n");

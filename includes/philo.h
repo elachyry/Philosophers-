@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/19 16:39:30 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/20 03:21:51 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ typedef struct s_data
 	size_t			started_time;
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	mutex_2;
-	pthread_mutex_t	mutex_3;
-	pthread_mutex_t	mutex_4;
 	pthread_t		monitor;
 	t_philo			*philos;
 	t_fork			*forks;
