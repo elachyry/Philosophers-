@@ -6,7 +6,7 @@
 #    By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 21:54:07 by melachyr          #+#    #+#              #
-#    Updated: 2024/03/19 00:35:56 by melachyr         ###   ########.fr        #
+#    Updated: 2024/03/21 06:12:52 by melachyr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 SRCS = 	srcs/tools/ft_atoi.c srcs/tools/ft_isdigit.c srcs/tools/ft_strcmp.c srcs/tools/ft_strlen.c\
 		srcs/tools/ft_trim.c\
 		srcs/utils/mutex_utils.c srcs/utils/time_utils.c srcs/utils/philo_utils.c srcs/utils/philo_printing_utils.c\
-		srcs/utils/observation_utils.c\
+		srcs/utils/observation_utils.c srcs/utils/threads_utils.c\
 		srcs/philo.c srcs/parsing.c srcs/init_variables.c srcs/start_program.c srcs/free_data.c
 OBJS = $(SRCS:.c=.o)
 

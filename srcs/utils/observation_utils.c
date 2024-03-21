@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:34:31 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/20 03:27:30 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 03:40:20 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 int	is_all_threads_starting(t_data *data)
 {
 	int	result;
-	
+
 	result = 0;
 	if (!lock_mutex(&data->mutex, 12))
 		return (-1);
-	result = data->running_threads;
-	if (result == data->number_of_philo)
+	if (data->running_threads == data->number_of_philo)
 		result = 1;
 	else
 		result = 0;
@@ -33,36 +32,24 @@ int	check_if_somone_died(t_philo *philo)
 {
 	size_t	time_stamp;
 	size_t	last_meal_time;
-	int		is_finished;
 
-	// is_finished = get_int_mutex(&philo->data->mutex_2, &philo->is_finished);
-	is_finished = philo->is_finished;
-	// printf("I'm in!!\n");
-	// if (is_finished == -1)
-	// 	return (-1);
-	if (is_finished == 1)
+	if (philo->is_finished == 1)
 		return (0);
 	last_meal_time = philo->last_meal_time;
-	// last_meal_time = get_sizet_mutex(&philo->data->mutex_2, &philo->last_meal_time);
-	// if (last_meal_time == -1)
-	// 	return (-1);
-	// printf("last meal time = %zu\n", last_meal_time);
 	time_stamp = get_current_time() - last_meal_time;
-	// printf("timestamp = %zu | time to die = %zu | philo %d\n", time_stamp, philo->data->time_to_die, philo->id);
 	if (time_stamp > philo->data->time_to_die)
 		return (1);
 	return (0);
 }
 
-void	*start_observation(void *arg)
+void	*observation_routine(void *arg)
 {
 	t_data	*data;
 	int		result;
 	int		i;
-	
+
 	data = (t_data *)arg;
 	result = 0;
-	// printf("------test\n");
 	while (!result)
 	{
 		result = is_all_threads_starting(data);
@@ -72,35 +59,13 @@ void	*start_observation(void *arg)
 			return ((void *)-1);
 		}
 	}
-	sleep(1);
-	result = 0;
-	while (!is_someone_died(data))
+	while (!data->is_someone_died)
 	{
-		// result = is_someone_died(data);
-		// if (result == -1)
-		// {
-		// 	write(2, "Error!\n", 7);
-		// 	return ((void *)-1);
-		// }
-		i = 0;
-		// printf("test1\n");
-		while (i < data->number_of_philo && !is_someone_died(data))
+		i = -1;
+		while (++i < data->number_of_philo && !data->is_someone_died)
 		{
-			// printf("result %d\n", i);
 			if (check_if_somone_died(data->philos + i))
-			{
-				// if (!set_int_mutex(&data->mutex_2, &data->is_someone_died, 1))
-				// 	return ((void *)-1);
-				data->is_someone_died = 1;
-				philo_died_printing(data->philos + i);
-			}
-			// result = is_someone_died(data);
-			// if (result == -1)
-			// {
-			// 	write(2, "Error!\n", 7);
-			// 	return ((void *)-1);
-			// }
-			i++;
+				philo_died(data->philos + i);
 		}
 	}
 	return (NULL);

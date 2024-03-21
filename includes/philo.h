@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/20 03:21:51 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 04:21:51 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 # include <sys/time.h>
 # include <limits.h>
 
-
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 //fork struct
 typedef struct s_fork
@@ -39,8 +38,6 @@ typedef struct s_philo
 	t_fork			*second_fork;
 	size_t			number_of_meals;
 	int				is_finished;
-	int				is_dead;
-	int				is_eating;
 	pthread_mutex_t	philo_mutex;
 	size_t			last_meal_time;
 	t_data			*data;
@@ -76,14 +73,21 @@ char	*ft_trim(char *str);
 int		parsing(char **argv);
 
 //init variables
-void	init_variables(t_data *data, char **argv);
+int		init_variables(t_data *data, char **argv);
 
 //free data
 int		free_data(t_data *data);
 
 //start program
 int		start_program(t_data *data);
-int		is_someone_died(t_data *data);
+void	*philos_routine(void *arg);
+void	*one_philo_routine(void *arg);
+
+//threads utils
+int		create_philos_threads(t_data *data);
+int		create_observation_thread(t_data *data);
+int		join_philos_threads(t_data *data);
+int		join_observation_threads(t_data *data);
 
 //utils
 int		lock_mutex(pthread_mutex_t *mutex, int place);
@@ -100,9 +104,10 @@ void	philo_eating_printing(t_philo *philo);
 void	philo_sleeping_printing(t_philo *philo);
 void	philo_thinking_printing(t_philo *philo);
 void	philo_died_printing(t_philo *philo);
-void	philo_eating(t_philo *philo);
+int		philo_eating(t_philo *philo);
 void	philo_sleeping(t_philo *philo);
 void	philo_thinking(t_philo *philo);
-void	*start_observation(void *arg);
+void	philo_died(t_philo *philo);
+void	*observation_routine(void *arg);
 
 #endif

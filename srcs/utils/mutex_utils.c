@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:33:07 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/19 03:22:48 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 04:10:45 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	unlock_mutex(pthread_mutex_t *mutex)
 	}
 	return (1);
 }
+
 int	set_int_mutex(pthread_mutex_t *mutex, int *var, int val)
 {
 	if (!lock_mutex(mutex, 0))
@@ -43,7 +44,6 @@ int	set_int_mutex(pthread_mutex_t *mutex, int *var, int val)
 
 int	increment_int_mutex(pthread_mutex_t *mutex, int *var, int val)
 {
-	// printf("increment %d by %d\n",*var, val);
 	if (!lock_mutex(mutex, 1))
 		return (0);
 	*var += val;
@@ -52,35 +52,34 @@ int	increment_int_mutex(pthread_mutex_t *mutex, int *var, int val)
 	return (1);
 }
 
-int	get_int_mutex(pthread_mutex_t *mutex, int *var)
-{
-	int	val;
+// int	get_int_mutex(pthread_mutex_t *mutex, int *var)
+// {
+// 	int	val;
 
-	if (!lock_mutex(mutex, 2))
-		return (-1);
-	val = *var;
-	if (!unlock_mutex(mutex))
-		return (-1);
-	return (val);
-}
+// 	if (!lock_mutex(mutex, 2))
+// 		return (-1);
+// 	val = *var;
+// 	if (!unlock_mutex(mutex))
+// 		return (-1);
+// 	return (val);
+// }
+// size_t	get_sizet_mutex(pthread_mutex_t *mutex, size_t *var)
+// {
+// 	size_t	val;
 
-int	set_sizet_mutex(pthread_mutex_t *mutex, size_t *var, size_t val)
-{
-	if (!lock_mutex(mutex, 3))
-		return (0);
-	*var = val;
-	if (!unlock_mutex(mutex))
-		return (0);
-	return (1);
-}
-size_t	get_sizet_mutex(pthread_mutex_t *mutex, size_t *var)
-{
-	size_t	val;
-
-	if (!lock_mutex(mutex, 4))
-		return (0);
-	val = *var;
-	if (!unlock_mutex(mutex))
-		return (0);
-	return (val);
-}
+// 	if (!lock_mutex(mutex, 4))
+// 		return (0);
+// 	val = *var;
+// 	if (!unlock_mutex(mutex))
+// 		return (0);
+// 	return (val);
+// }
+// int	set_sizet_mutex(pthread_mutex_t *mutex, size_t *var, size_t val)
+// {
+// 	if (!lock_mutex(mutex, 3))
+// 		return (0);
+// 	*var = val;
+// 	if (!unlock_mutex(mutex))
+// 		return (0);
+// 	return (1);
+// }
