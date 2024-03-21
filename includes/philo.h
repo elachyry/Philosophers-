@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 04:21:51 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:12:13 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef struct s_philo
 {
 	int				id;
 	pthread_t		thread;
-	t_fork			*first_fork;
-	t_fork			*second_fork;
+	t_fork			*right_fork;
+	t_fork			*left_fork;
 	size_t			number_of_meals;
 	int				is_finished;
 	pthread_mutex_t	philo_mutex;
@@ -56,7 +56,6 @@ typedef struct s_data
 	int				running_threads;
 	size_t			started_time;
 	pthread_mutex_t	mutex;
-	pthread_mutex_t	mutex_2;
 	pthread_t		monitor;
 	t_philo			*philos;
 	t_fork			*forks;
@@ -89,25 +88,29 @@ int		create_observation_thread(t_data *data);
 int		join_philos_threads(t_data *data);
 int		join_observation_threads(t_data *data);
 
-//utils
-int		lock_mutex(pthread_mutex_t *mutex, int place);
-int		unlock_mutex(pthread_mutex_t *mutex);
-int		set_int_mutex(pthread_mutex_t *mutex, int *var, int val);
-int		increment_int_mutex(pthread_mutex_t *mutex, int *var, int val);
-int		get_int_mutex(pthread_mutex_t *mutex, int *var);
-int		set_sizet_mutex(pthread_mutex_t *mutex, size_t *var, size_t val);
-size_t	get_sizet_mutex(pthread_mutex_t *mutex, size_t *var);
-int		ft_usleep(size_t milliseconds);
-size_t	get_current_time(void);
+//philo print utils
 void	philo_taken_fork_printing(t_philo *philo);
 void	philo_eating_printing(t_philo *philo);
 void	philo_sleeping_printing(t_philo *philo);
 void	philo_thinking_printing(t_philo *philo);
 void	philo_died_printing(t_philo *philo);
+
+//philo utils
 int		philo_eating(t_philo *philo);
 void	philo_sleeping(t_philo *philo);
 void	philo_thinking(t_philo *philo);
 void	philo_died(t_philo *philo);
+
+//time utils
+int		ft_usleep(size_t milliseconds);
+size_t	get_current_time(void);
+
+//mutex utils
+int		lock_mutex(pthread_mutex_t *mutex, int place);
+int		unlock_mutex(pthread_mutex_t *mutex);
+int		increment_int_mutex(pthread_mutex_t *mutex, int *var, int val);
+
+//observation utils
 void	*observation_routine(void *arg);
 
 #endif

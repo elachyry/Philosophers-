@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 00:33:07 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 04:10:45 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:11:47 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,6 @@ int	unlock_mutex(pthread_mutex_t *mutex)
 	return (1);
 }
 
-int	set_int_mutex(pthread_mutex_t *mutex, int *var, int val)
-{
-	if (!lock_mutex(mutex, 0))
-		return (0);
-	*var = val;
-	if (!unlock_mutex(mutex))
-		return (0);
-	return (1);
-}
-
 int	increment_int_mutex(pthread_mutex_t *mutex, int *var, int val)
 {
 	if (!lock_mutex(mutex, 1))
@@ -52,6 +42,15 @@ int	increment_int_mutex(pthread_mutex_t *mutex, int *var, int val)
 	return (1);
 }
 
+// int	set_int_mutex(pthread_mutex_t *mutex, int *var, int val)
+// {
+// 	if (!lock_mutex(mutex, 0))
+// 		return (0);
+// 	*var = val;
+// 	if (!unlock_mutex(mutex))
+// 		return (0);
+// 	return (1);
+// }
 // int	get_int_mutex(pthread_mutex_t *mutex, int *var)
 // {
 // 	int	val;

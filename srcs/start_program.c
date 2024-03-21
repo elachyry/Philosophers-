@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:34:29 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 06:24:19 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:03:14 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*philos_routine(void *arg)
 	while (!philo->data->is_all_thread_created)
 		;
 	philo->last_meal_time = get_current_time();
-	if (!increment_int_mutex(&philo->philo_mutex,
+	if (!increment_int_mutex(&philo->data->mutex,
 			&philo->data->running_threads, 1))
 		return ((void *)-1);
 	if (philo->id % 2 == 0)

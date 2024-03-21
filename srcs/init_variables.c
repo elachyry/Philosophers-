@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:28:52 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 06:24:02 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/21 07:08:30 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	init_data(t_data *data, char **argv)
 	data->started_time = 0;
 	data->running_threads = 0;
 	data->is_someone_died = 0;
-	if (pthread_mutex_init(&data->mutex, NULL) != 0
-		|| pthread_mutex_init(&data->mutex_2, NULL) != 0)
+	if (pthread_mutex_init(&data->mutex, NULL) != 0)
 	{
 		printf("Mutex error!");
 		return (0);
@@ -58,11 +57,11 @@ int	init_forks(t_data *data)
 
 void	forks_affectation(t_data *data, int i)
 {
-	data->philos[i].second_fork = &data->forks[i];
+	data->philos[i].left_fork = &data->forks[i];
 	if (i == 0)
-		data->philos[i].first_fork = &data->forks[data->number_of_philo - 1];
+		data->philos[i].right_fork = &data->forks[data->number_of_philo - 1];
 	else
-		data->philos[i].first_fork = &data->forks[i - 1];
+		data->philos[i].right_fork = &data->forks[i - 1];
 }
 
 int	init_philos(t_data *data)
