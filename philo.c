@@ -6,11 +6,11 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 21:57:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 07:44:17 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/22 04:07:26 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "includes/philo.h"
 
 int	main(int argc, char **argv)
 {
