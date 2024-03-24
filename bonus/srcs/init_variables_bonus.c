@@ -1,77 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_variables.c                                   :+:      :+:    :+:   */
+/*   init_variables_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:28:52 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/24 02:35:59 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/24 02:55:20 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
-int	init_data(t_data *data, char **argv)
+void	init_data(t_data *data, char **argv)
 {
 	data->number_of_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
-	data->is_all_thread_created = 0;
 	data->started_time = 0;
-	data->running_threads = 0;
 	data->is_someone_died = 0;
-	
-	if (pthread_mutex_init(&data->mutex, NULL) != 0)
-	{
-		ft_putstr_fd("Mutex error!\n", 2);
-		return (0);
-	}
+	data->nbr_philo_finished = 0;
 	if (argv[5] != NULL)
 		data->nbr_time_must_eat = ft_atoi(argv[5]);
 	else
 		data->nbr_time_must_eat = -1;
-	return (1);
 }
 
-int	init_forks(t_data *data)
+void	init_semephores(t_data *data)
 {
-	int	i;
-
-	data->forks = malloc(sizeof(t_fork) * data->number_of_philo);
-	if (data->forks == NULL)
-		return (0);
-	i = 0;
-	while (i < data->number_of_philo)
+	sem_unlink("/forks_sem");
+	data->forks = sem_open("/forks_sem", O_CREAT, 0644, data->number_of_philo);
+	sem_unlink("/wr_sem");
+	data->wr_sem = sem_open("/wr_sem", O_CREAT, 0644, 1);
+	sem_unlink("/sem");
+	data->sem = sem_open("/sem", O_CREAT, 0644, 1);
+	sem_unlink("/exit_sem");
+	data->exit_sem = sem_open("/exit_sem", O_CREAT, 0644, 0);
+	if (data->forks == SEM_FAILED || data->wr_sem == SEM_FAILED || data->exit_sem == SEM_FAILED)
 	{
-		data->forks[i].id = i + 1;
-		if (pthread_mutex_init(&data->forks[i].fork, NULL) != 0)
-		{
-			ft_putstr_fd("Mutex error!\n", 2);
-			return (0);
-		}
-		i++;
+		ft_putstr_fd("Semaphore error\n", 2);
+		exit (1);
 	}
-	return (1);
 }
 
-void	forks_affectation(t_data *data, int i)
-{
-	data->philos[i].left_fork = &data->forks[i];
-	if (i == 0)
-		data->philos[i].right_fork = &data->forks[data->number_of_philo - 1];
-	else
-		data->philos[i].right_fork = &data->forks[i - 1];
-}
-
-int	init_philos(t_data *data)
+void	init_philos(t_data *data)
 {
 	int	i;
 
 	data->philos = malloc(sizeof(t_philo) * data->number_of_philo);
 	if (data->philos == NULL)
-		return (0);
+		exit(1);
+	data->pid_philos = malloc(sizeof(pid_t) * data->number_of_philo);
+	if (data->pid_philos == NULL)
+		exit(1);
 	i = 0;
 	while (i < data->number_of_philo)
 	{
@@ -80,20 +62,12 @@ int	init_philos(t_data *data)
 		data->philos[i].last_meal_time = 0;
 		data->philos[i].number_of_meals = 0;
 		data->philos[i].data = data;
-		if (pthread_mutex_init(&data->philos[i].philo_mutex, NULL) != 0)
-		{
-			ft_putstr_fd("Mutex error!\n", 2);
-			return (0);
-		}
-		forks_affectation(data, i);
 		i++;
 	}
-	return (1);
 }
 
-int	init_variables(t_data *data, char **argv)
+void	init_variables(t_data *data, char **argv)
 {
-	if (!init_data(data, argv) || !init_forks(data) || !init_philos(data))
-		return (0);
-	return (1);
+	init_data(data, argv);
+	init_philos(data);
 }
