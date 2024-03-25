@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/25 03:18:04 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/25 04:46:40 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	init_semephores(t_data *data);
 
 //free data
 void	free_data(t_data *data);
+void	wait_processes(t_data *data);
+void	killing_processes(t_data *data);
 
 //start program
 void	start_program(t_data *data);
@@ -85,6 +87,13 @@ void	philo_thinking_printing(t_philo *philo);
 void	philo_died_printing(t_philo *philo);
 
 //philo utils
+void	philo_eating(t_data *data, int i);
+void	philo_sleeping(t_philo *philo);
+void	philo_thinking(t_philo *philo);
+void	philo_died(t_philo *philo);
+
+//observation utils
+void	*observation_routine(void *arg);
 
 //time utils
 size_t	get_current_time(void);
