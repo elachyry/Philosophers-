@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 03:15:39 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/25 04:43:07 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/25 05:07:13 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	wait_processes(t_data *data)
 
 	i = 0;
 	while (i < data->number_of_philo)
-    {
-        waitpid(data->pid_philos[i], NULL, 0);
-        i++;
-    }
+	{
+		waitpid(data->pid_philos[i], NULL, 0);
+		i++;
+	}
 }
 
 void	killing_processes(t_data *data)

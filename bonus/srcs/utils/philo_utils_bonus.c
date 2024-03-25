@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 18:21:39 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/25 04:55:00 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/25 05:08:24 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	philo_eating(t_data *data, int i)
 	sem_post(data->forks);
 	sem_post(data->forks);
 	if (data->nbr_time_must_eat != -1
-		&& data->philos[i].number_of_meals == data->philos[i].data->nbr_time_must_eat)
+		&& data->philos[i].number_of_meals
+		== data->philos[i].data->nbr_time_must_eat)
 	{
 		data->philos[i].is_finished = 1;
 		exit(0);

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 05:03:47 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/25 05:02:13 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/25 05:07:45 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	child_process(t_data *data, int i)
 	if (!data->pid_philos[i])
 	{
 		if (pthread_create(&data->philos[i].monitor, NULL,
-			&observation_routine, &data->philos[i]) != 0)
+				&observation_routine, &data->philos[i]) != 0)
 		{
 			ft_putstr_fd("Thread creation error\n", 2);
 			exit(1);
@@ -40,7 +40,6 @@ void	create_philos(t_data *data)
 
 	i = 0;
 	data->started_time = get_current_time();
-
 	while (i < data->number_of_philo)
 	{
 		data->pid_philos[i] = fork();

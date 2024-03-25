@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/25 04:46:40 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/25 05:06:52 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/time.h>
 # include <limits.h>
 # include <signal.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 
 typedef struct s_data	t_data;
 
@@ -65,7 +65,7 @@ char	*ft_trim(char *str);
 void	ft_putstr_fd(char *s, int fd);
 
 //parsing
-void		parsing(char **argv);
+void	parsing(char **argv);
 
 //init variables
 void	init_variables(t_data *data, char **argv);
