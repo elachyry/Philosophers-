@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:34:29 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/23 01:39:59 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/25 05:04:32 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	*one_philo_routine(void *arg)
 	philo->last_meal_time = get_current_time();
 	philo->data->running_threads++;
 	philo_taken_fork_printing(philo);
-	int		result;
 	while (!philo->data->is_someone_died)
 		usleep(200);
 	return (NULL);

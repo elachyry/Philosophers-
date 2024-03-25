@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:28:52 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/25 03:14:43 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/25 05:03:20 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,11 @@ void	init_philos(t_data *data)
 void	init_variables(t_data *data, char **argv)
 {
 	init_data(data, argv);
+	if (data->nbr_time_must_eat == 0)
+	{
+		ft_putstr_fd("Number_of_times_each_philosopher_must_eat\
+		value cannot be lower than 0!\n", 2);
+		exit(1);
+	}
 	init_philos(data);
 }
