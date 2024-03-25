@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:28:52 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/24 02:55:20 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/25 03:14:43 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ void	init_semephores(t_data *data)
 	data->forks = sem_open("/forks_sem", O_CREAT, 0644, data->number_of_philo);
 	sem_unlink("/wr_sem");
 	data->wr_sem = sem_open("/wr_sem", O_CREAT, 0644, 1);
-	sem_unlink("/sem");
-	data->sem = sem_open("/sem", O_CREAT, 0644, 1);
 	sem_unlink("/exit_sem");
 	data->exit_sem = sem_open("/exit_sem", O_CREAT, 0644, 0);
-	if (data->forks == SEM_FAILED || data->wr_sem == SEM_FAILED || data->exit_sem == SEM_FAILED)
+	if (data->forks == SEM_FAILED || data->wr_sem == SEM_FAILED
+		|| data->exit_sem == SEM_FAILED)
 	{
 		ft_putstr_fd("Semaphore error\n", 2);
 		exit (1);

@@ -6,7 +6,7 @@
 #    By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/22 04:10:00 by melachyr          #+#    #+#              #
-#    Updated: 2024/03/24 01:21:21 by melachyr         ###   ########.fr        #
+#    Updated: 2024/03/25 03:17:09 by melachyr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CFLAGS = -Wall -Wextra -Werror
 SRCS = 	srcs/tools/ft_atoi.c srcs/tools/ft_isdigit.c srcs/tools/ft_strcmp.c srcs/tools/ft_strlen.c\
 		srcs/tools/ft_trim.c srcs/tools/ft_putstr_fd.c\
 		srcs/utils/time_utils_bonus.c srcs/utils/philo_printing_utils_bonus.c\
-		philo_bonus.c srcs/parsing_bonus.c srcs/init_variables_bonus.c srcs/start_program_bonus.c
+		philo_bonus.c srcs/parsing_bonus.c srcs/init_variables_bonus.c srcs/start_program_bonus.c\
+		srcs/free_data_bonus.c
 OBJS = $(SRCS:.c=.o)
 
 all:$(NAME)

@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 05:03:47 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/24 23:14:05 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/25 03:18:24 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	*observation_routine(void *arg)
 	{
 		if (philo->data->nbr_time_must_eat != -1
 			&& philo->number_of_meals == philo->data->nbr_time_must_eat)
-			{
-				philo->is_finished = 1;
-				break ;
-			}
+		{
+			philo->is_finished = 1;
+			break ;
+		}
 		if (check_if_somone_died(philo))
 		{
 			philo->data->is_someone_died = 1;
@@ -55,53 +55,42 @@ void	*observation_routine(void *arg)
 void	*eat_observation_routine(void	*arg)
 {
 	t_data	*data;
-	// int		i;
-	// int		result;
-
-	data = (t_data *)arg;
+	int		i;
+	
+	data = (t_data *)arg;;
+	i = 0;
 	while (1)
 	{
-		// i = 0;
-		// result = 0;
-		// while (i < data->number_of_philo)
-		// {
-		// 	// printf("philo %d is_finished = %d\n", data->philos[i].id, data->philos[i].is_finished);
-		// 	if (data->philos[i].is_finished)
-		// 	{
-		// 		printf("philo %d finished\n", data->philos[i].id);	
-		// 		result++;
-		// 	}
-		// 	i++;
-		// }
-		// printf("result = %d\n", result);
-		if (data->nbr_philo_finished == data->number_of_philo - 1)
+		if (data->nbr_time_must_eat != -1)
 		{
-			sem_post(data->exit_sem);
-			break ;
+			i = 0;
+			while (i < data->number_of_philo)
+			{
+				if (data->philos[i].number_of_meals < data->nbr_time_must_eat)
+					break ;
+				i++;
+			}
+			if (i == data->number_of_philo)
+			{
+				sem_post(data->exit_sem);
+				break ;
+			}
 		}
+		usleep(1000);
 	}
-	return (NULL);
+    return NULL;
 }
 
-void	kill_processes(t_data *data)
+void	wait_processes(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	// printf("killing processes\n");
-	while (data->number_of_philo)
-	{
-		kill(data->pid_philos[i], SIGTERM);
-		i++;
-	}
-	sem_close(data->forks);
-	sem_close(data->exit_sem);
-	sem_close(data->wr_sem);
-	sem_unlink("forks");
-	sem_unlink("exit_sem");
-	sem_unlink("wr_sem");
-	free(data->pid_philos);
-	free(data->philos);
+	while (i < data->number_of_philo)
+    {
+        waitpid(data->pid_philos[i], NULL, 0);
+        i++;
+    }
 }
 
 void	create_philos(t_data *data)
@@ -110,39 +99,29 @@ void	create_philos(t_data *data)
 
 	i = 0;
 	data->started_time = get_current_time();
-	if (pthread_create(&data->eat_monitor, NULL,
-		&eat_observation_routine, data->philos) != 0)
-	{
-		ft_putstr_fd("Thread creation error\n", 2);
-		exit(1);
-	}
+
 	while (i < data->number_of_philo)
 	{
 		data->pid_philos[i] = fork();
 		if (data->pid_philos[i] == -1)
 		{
 			ft_putstr_fd("Fork error\n", 2);
-			kill_processes(data);
 			exit(1);
 		}
 		data->philos[i].last_meal_time = get_current_time();
 		if (!data->pid_philos[i])
 		{
 			data->philos[i].id = i + 1;
-			data->philos[i].pid = data->pid_philos[i];
 			if (pthread_create(&data->philos[i].monitor, NULL,
 				&observation_routine, &data->philos[i]) != 0)
 			{
 				ft_putstr_fd("Thread creation error\n", 2);
 				exit(1);
 			}
-			pthread_detach(data->philos[i].monitor);
 			if (data->philos[i].id % 2 == 0)
 				ft_usleep(100);
 			while (!data->philos[i].is_finished)
 			{
-				// if (data->philos[i].is_finished)
-				// 	break ;
 				sem_wait(data->forks);
 				philo_taken_fork_printing(&data->philos[i]);
 				sem_wait(data->forks);
@@ -163,10 +142,8 @@ void	create_philos(t_data *data)
 				ft_usleep(data->time_to_sleep);
 				philo_thinking_printing(&data->philos[i]);
 			}
-			sem_wait(data->sem);
-			data->nbr_philo_finished++;
-			sem_post(data->sem);
-		}		
+			pthread_join(data->philos[i].monitor, NULL);
+		}
 		i++;
 	}
 	
@@ -176,6 +153,5 @@ void	start_program(t_data *data)
 {
 	init_semephores(data);
 	create_philos(data);
-	sem_wait(data->exit_sem);
-	kill_processes(data);
+	wait_processes(data);
 }

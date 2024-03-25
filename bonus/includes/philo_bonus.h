@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/24 02:54:44 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/03/25 03:18:04 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_philo
 {
 	int				id;
 	pthread_t		monitor;
-	pid_t			pid;
+	pthread_t		eat;
 	int				number_of_meals;
 	int				is_finished;
 	size_t			last_meal_time;
@@ -49,12 +49,10 @@ typedef struct s_data
 	int				is_someone_died;
 	size_t			started_time;
 	sem_t			*wr_sem;
-	sem_t			*sem;
 	sem_t			*exit_sem;
 	t_philo			*philos;
 	pid_t			*pid_philos;
 	sem_t			*forks;
-	pthread_t		eat_monitor;
 	int				nbr_philo_finished;
 }	t_data;
 
@@ -74,6 +72,7 @@ void	init_variables(t_data *data, char **argv);
 void	init_semephores(t_data *data);
 
 //free data
+void	free_data(t_data *data);
 
 //start program
 void	start_program(t_data *data);

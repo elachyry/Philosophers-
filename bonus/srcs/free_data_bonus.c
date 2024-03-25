@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_bonus.c                                      :+:      :+:    :+:   */
+/*   free_data_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 04:10:38 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/25 03:16:07 by melachyr         ###   ########.fr       */
+/*   Created: 2024/03/25 03:15:39 by melachyr          #+#    #+#             */
+/*   Updated: 2024/03/25 03:15:55 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/philo_bonus.h"
+#include "../includes/philo_bonus.h"
 
-int	main(int argc, char **argv)
+void	free_data(t_data *data)
 {
-	t_data	data;
-
-	if (argc != 5 && argc != 6)
-	{
-		ft_putstr_fd("args must be 4 or 5!\n", 2);
-		exit(1);
-	}
-	parsing(argv);
-	init_variables(&data, argv);
-	start_program(&data);
-	free_data(&data);
-	return (0);
+	free(data->philos);
+	free(data->pid_philos);
+	sem_close(data->forks);
+	sem_close(data->wr_sem);
+	sem_close(data->exit_sem);
+	sem_unlink("/forks_sem");
+	sem_unlink("/wr_sem");
+	sem_unlink("/sem");
+	sem_unlink("/exit_sem");
 }
