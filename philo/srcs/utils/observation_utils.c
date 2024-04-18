@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   observation_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:34:31 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 07:51:51 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:11:11 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ void	*observation_routine(void *arg)
 			return ((void *)-1);
 		}
 	}
-	while (!data->is_someone_died)
+	lock_mutex(&data->mutex_3);
+	while (1)
 	{
+		if (!data->is_someone_died)
+			break ;
 		i = -1;
 		while (++i < data->number_of_philo && !data->is_someone_died)
 		{
@@ -68,5 +71,6 @@ void	*observation_routine(void *arg)
 				philo_died(data->philos + i);
 		}
 	}
+	unlock_mutex(&data->mutex_3);
 	return (NULL);
 }

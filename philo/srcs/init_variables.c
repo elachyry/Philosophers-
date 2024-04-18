@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_variables.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:28:52 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/25 05:07:53 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:54:50 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int	init_data(t_data *data, char **argv)
 	data->started_time = 0;
 	data->running_threads = 0;
 	data->is_someone_died = 0;
-	if (pthread_mutex_init(&data->mutex, NULL) != 0)
+	if (pthread_mutex_init(&data->mutex, NULL) != 0
+		|| pthread_mutex_init(&data->mutex_2, NULL) != 0
+		|| pthread_mutex_init(&data->mutex_3, NULL) != 0)
 	{
 		ft_putstr_fd("Mutex error!\n", 2);
 		return (0);
