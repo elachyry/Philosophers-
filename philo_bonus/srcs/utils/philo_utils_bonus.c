@@ -29,7 +29,9 @@ void	philo_eating(t_data *data, int i)
 	// data->philos[i].last_meal_time = get_current_time();
 	// sem_post(data->sem);
 	set_last_meal_time(&data->philos[i], get_current_time());
+	sem_wait(data->meals_sem);
 	data->philos[i].number_of_meals++;
+	sem_post(data->meals_sem);
 	philo_eating_printing(&data->philos[i]);
 	ft_usleep(data->time_to_eat);
 	sem_post(data->forks);
@@ -38,7 +40,9 @@ void	philo_eating(t_data *data, int i)
 		&& data->philos[i].number_of_meals
 		== data->philos[i].data->nbr_time_must_eat)
 	{
+		sem_wait(data->dead_sem);
 		data->philos[i].is_finished = 1;
+		sem_post(data->dead_sem);
 		exit(0);
 	}
 }

@@ -37,8 +37,8 @@ void	init_semephores(t_data *data)
 	data->wr_sem = sem_open("/wr_sem", O_CREAT, 0644, 1);
 	sem_unlink("/dead_sem");
 	data->dead_sem = sem_open("/dead_sem", O_CREAT, 0644, 1);
-	sem_unlink("/sem_");
-	data->sem_2 = sem_open("/sem_2", O_CREAT, 0644, 1);
+	sem_unlink("/meals_sem");
+	data->meals_sem = sem_open("/meals_sem", O_CREAT, 0644, 1);
 	if (data->forks == SEM_FAILED || data->wr_sem == SEM_FAILED
 		|| data->sem == SEM_FAILED || data->dead_sem == SEM_FAILED)
 	{

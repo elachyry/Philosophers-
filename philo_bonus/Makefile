@@ -12,7 +12,7 @@
 
 NAME = philo_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g3
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=thread -g3
 SRCS = 	srcs/tools/ft_atoi.c srcs/tools/ft_isdigit.c srcs/tools/ft_strcmp.c srcs/tools/ft_strlen.c\
 		srcs/tools/ft_trim.c srcs/tools/ft_putstr_fd.c\
 		srcs/utils/time_utils_bonus.c srcs/utils/philo_printing_utils_bonus.c srcs/utils/philo_utils_bonus.c\

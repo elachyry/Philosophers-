@@ -60,5 +60,4 @@ void	start_program(t_data *data)
 	init_semephores(data);
 	create_philos(data);
 	wait_processes(data);
-	free_data(data);
 }

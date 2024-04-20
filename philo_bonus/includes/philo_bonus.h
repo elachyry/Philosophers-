@@ -52,8 +52,8 @@ typedef struct s_data
 	pid_t			*pid_philos;
 	sem_t			*wr_sem;
 	sem_t			*dead_sem;
+	sem_t			*meals_sem;
 	sem_t			*sem;
-	sem_t			*sem_2;
 	sem_t			*forks;
 	int				nbr_philo_finished;
 }	t_data;

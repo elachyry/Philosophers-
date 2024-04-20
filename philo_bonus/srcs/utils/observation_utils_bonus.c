@@ -41,12 +41,17 @@ void	*observation_routine(void *arg)
 	philo = (t_philo *)arg;
 	while (!philo->data->is_someone_died && !philo->is_finished)
 	{
+		sem_wait(philo->data->meals_sem);
 		if (philo->data->nbr_time_must_eat != -1
 			&& philo->number_of_meals == philo->data->nbr_time_must_eat)
 		{
+			sem_wait(philo->data->dead_sem);
 			philo->is_finished = 1;
+			sem_post(philo->data->dead_sem);
+			sem_post(philo->data->meals_sem);
 			break ;
 		}
+		sem_post(philo->data->meals_sem);
 		if (check_if_somone_died(philo))
 		{
 			sem_wait(philo->data->dead_sem);
