@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_program_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 05:03:47 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/26 03:48:54 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:42:47 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	child_process(t_data *data, int i)
 			exit(1);
 		}
 		if (data->philos[i].id % 2 == 0)
-			ft_usleep(100);
+			ft_usleep(60);
 		while (!data->philos[i].is_finished)
 		{
 			philo_eating(data, i);

@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 18:21:39 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/25 05:08:24 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:42:03 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo_bonus.h"
+
+void set_last_meal_time(t_philo *philo, size_t time)
+{
+    sem_wait(philo->data->sem);
+    philo->last_meal_time = time;
+    sem_post(philo->data->sem);
+}
 
 void	philo_eating(t_data *data, int i)
 {
@@ -18,7 +25,10 @@ void	philo_eating(t_data *data, int i)
 	philo_taken_fork_printing(&data->philos[i]);
 	sem_wait(data->forks);
 	philo_taken_fork_printing(&data->philos[i]);
-	data->philos[i].last_meal_time = get_current_time();
+	// sem_wait(data->sem);
+	// data->philos[i].last_meal_time = get_current_time();
+	// sem_post(data->sem);
+	set_last_meal_time(&data->philos[i], get_current_time());
 	data->philos[i].number_of_meals++;
 	philo_eating_printing(&data->philos[i]);
 	ft_usleep(data->time_to_eat);

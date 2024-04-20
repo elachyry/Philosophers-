@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:34:31 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/18 19:11:11 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:36:33 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,16 @@ int	check_if_somone_died(t_philo *philo)
 	size_t	time_stamp;
 	size_t	last_meal_time;
 
+	lock_mutex(&philo->data->mutex_5);
 	if (philo->is_finished == 1)
+	{
+		unlock_mutex(&philo->data->mutex_5);	
 		return (0);
+	}
+	unlock_mutex(&philo->data->mutex_5);
+	lock_mutex(&philo->data->mutex_4);
 	last_meal_time = philo->last_meal_time;
+	unlock_mutex(&philo->data->mutex_4);
 	time_stamp = get_current_time() - last_meal_time;
 	if (time_stamp > philo->data->time_to_die)
 		return (1);
@@ -59,18 +66,28 @@ void	*observation_routine(void *arg)
 			return ((void *)-1);
 		}
 	}
-	lock_mutex(&data->mutex_3);
 	while (1)
 	{
-		if (!data->is_someone_died)
-			break ;
-		i = -1;
-		while (++i < data->number_of_philo && !data->is_someone_died)
+		lock_mutex(&data->mutex_6);
+		if (data->is_someone_died)
 		{
+			unlock_mutex(&data->mutex_6);
+			break ;
+		}
+		unlock_mutex(&data->mutex_6);
+		i = -1;
+		while (1)
+		{
+			lock_mutex(&data->mutex_6);
+			if (!(++i < data->number_of_philo && !data->is_someone_died))
+			{
+				unlock_mutex(&data->mutex_6);
+				break;
+			}
 			if (check_if_somone_died(data->philos + i))
 				philo_died(data->philos + i);
+			unlock_mutex(&data->mutex_6);
 		}
 	}
-	unlock_mutex(&data->mutex_3);
 	return (NULL);
 }

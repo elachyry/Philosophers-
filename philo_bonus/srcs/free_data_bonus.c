@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_data_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 03:15:39 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/26 04:00:00 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/18 21:21:58 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	killing_processes(t_data *data)
 	i = 0;
 	while (i < data->number_of_philo)
 	{
-		kill(data->pid_philos[i], SIGTERM);
+		kill(data->pid_philos[i], SIGKILL);
 		i++;
 	}
 }

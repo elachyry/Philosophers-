@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:34:29 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/18 20:06:02 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:46:12 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	*philos_routine(void *arg)
 	{
 		lock_mutex(&philo->data->mutex_2);
 		if (philo->data->is_all_thread_created)
+		{
+			unlock_mutex(&philo->data->mutex_2);
 			break ;
+		}
 		unlock_mutex(&philo->data->mutex_2);
 	}
 	philo->last_meal_time = get_current_time();
@@ -30,8 +33,15 @@ void	*philos_routine(void *arg)
 		return ((void *)-1);
 	if (philo->id % 2 == 0)
 		ft_usleep(60);
-	while (!philo->data->is_someone_died)
+	while (1)
 	{
+		lock_mutex(&philo->data->mutex_3);
+		if (philo->data->is_someone_died)
+		{
+			unlock_mutex(&philo->data->mutex_3);
+			break;
+		}
+		unlock_mutex(&philo->data->mutex_3);
 		if (philo->is_finished)
 			break ;
 		if (!philo_eating(philo))
@@ -47,13 +57,16 @@ void	*one_philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	lock_mutex(&philo->data->mutex);
 	while (1)
 	{
+		lock_mutex(&philo->data->mutex_2);
 		if (philo->data->is_all_thread_created)
+		{
+			unlock_mutex(&philo->data->mutex_2);
 			break ;
+		}
+		unlock_mutex(&philo->data->mutex_2);
 	}
-	unlock_mutex(&philo->data->mutex);
 	philo->last_meal_time = get_current_time();
 	philo->data->running_threads++;
 	philo_taken_fork_printing(philo);
@@ -76,7 +89,9 @@ int	start_program(t_data *data)
 	unlock_mutex(&data->mutex_2);
 	if (!join_philos_threads(data))
 		return (0);
+	lock_mutex(&data->mutex_6);
 	data->is_someone_died = 1;
+	unlock_mutex(&data->mutex_6);
 	if (!join_observation_threads(data))
 		return (0);
 	return (1);

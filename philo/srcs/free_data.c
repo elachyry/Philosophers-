@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:11:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 07:50:57 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:54:29 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	free_data(t_data *data)
 		if (!destroy_mutex(&data->philos[i++].philo_mutex))
 			result = 0;
 	}
-	if (!destroy_mutex(&data->mutex))
+	if (!destroy_mutex(&data->mutex) || !destroy_mutex(&data->mutex_2)
+		|| !destroy_mutex(&data->mutex_3) || !destroy_mutex(&data->mutex_4)
+		|| !destroy_mutex(&data->mutex_5) || !destroy_mutex(&data->mutex_6))
 		result = 0;
 	free(data->forks);
 	free(data->philos);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_variables_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:28:52 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/26 03:59:44 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/20 12:08:52 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,16 @@ void	init_semephores(t_data *data)
 {
 	sem_unlink("/forks_sem");
 	data->forks = sem_open("/forks_sem", O_CREAT, 0644, data->number_of_philo);
+	sem_unlink("/sem");
+	data->sem = sem_open("/sem", O_CREAT, 0644, 1);
 	sem_unlink("/wr_sem");
 	data->wr_sem = sem_open("/wr_sem", O_CREAT, 0644, 1);
-	if (data->forks == SEM_FAILED || data->wr_sem == SEM_FAILED)
+	sem_unlink("/dead_sem");
+	data->dead_sem = sem_open("/dead_sem", O_CREAT, 0644, 1);
+	sem_unlink("/sem_");
+	data->sem_2 = sem_open("/sem_2", O_CREAT, 0644, 1);
+	if (data->forks == SEM_FAILED || data->wr_sem == SEM_FAILED
+		|| data->sem == SEM_FAILED || data->dead_sem == SEM_FAILED)
 	{
 		ft_putstr_fd("Semaphore error\n", 2);
 		exit (1);

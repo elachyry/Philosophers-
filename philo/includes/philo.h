@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/18 18:54:45 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:34:36 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ typedef struct s_data
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	mutex_2;
 	pthread_mutex_t	mutex_3;
+	pthread_mutex_t	mutex_4;
+	pthread_mutex_t	mutex_5;
+	pthread_mutex_t	mutex_6;
 	pthread_t		monitor;
 	t_philo			*philos;
 	t_fork			*forks;

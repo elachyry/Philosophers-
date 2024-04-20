@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/26 03:44:43 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/20 12:08:03 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ typedef struct s_data
 	t_philo			*philos;
 	pid_t			*pid_philos;
 	sem_t			*wr_sem;
+	sem_t			*dead_sem;
+	sem_t			*sem;
+	sem_t			*sem_2;
 	sem_t			*forks;
 	int				nbr_philo_finished;
 }	t_data;
@@ -97,5 +100,6 @@ void	*observation_routine(void *arg);
 //time utils
 size_t	get_current_time(void);
 int		ft_usleep(size_t milliseconds);
+void set_last_meal_time(t_philo *philo, size_t time);
 
 #endif

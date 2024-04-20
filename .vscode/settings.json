@@ -4,6 +4,7 @@
 		"philo.h": "c",
 		"type_traits": "c",
 		"limits.h": "c",
-		"semaphore.h": "c"
+		"semaphore.h": "c",
+		"philo_bonus.h": "c"
 	}
 }
