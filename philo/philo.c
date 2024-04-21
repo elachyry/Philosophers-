@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 21:57:16 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/19 20:11:37 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/21 15:37:44 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ int	main(int argc, char **argv)
 		result = 1;
 	if (!free_data(&data))
 		result = 1;
-	// system("leaks philo");
 	return (result);
 }

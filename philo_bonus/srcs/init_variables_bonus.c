@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:28:52 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/20 12:08:52 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/21 15:29:33 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 void	init_data(t_data *data, char **argv)
 {
+	gettimeofday(&(data->start_eating), NULL);
 	data->number_of_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	data->started_time = 0;
-	data->is_someone_died = 0;
-	data->nbr_philo_finished = 0;
 	if (argv[5] != NULL)
 		data->nbr_time_must_eat = ft_atoi(argv[5]);
 	else
@@ -31,16 +30,9 @@ void	init_semephores(t_data *data)
 {
 	sem_unlink("/forks_sem");
 	data->forks = sem_open("/forks_sem", O_CREAT, 0644, data->number_of_philo);
-	sem_unlink("/sem");
-	data->sem = sem_open("/sem", O_CREAT, 0644, 1);
 	sem_unlink("/wr_sem");
 	data->wr_sem = sem_open("/wr_sem", O_CREAT, 0644, 1);
-	sem_unlink("/dead_sem");
-	data->dead_sem = sem_open("/dead_sem", O_CREAT, 0644, 1);
-	sem_unlink("/meals_sem");
-	data->meals_sem = sem_open("/meals_sem", O_CREAT, 0644, 1);
-	if (data->forks == SEM_FAILED || data->wr_sem == SEM_FAILED
-		|| data->sem == SEM_FAILED || data->dead_sem == SEM_FAILED)
+	if (data->forks == SEM_FAILED || data->wr_sem == SEM_FAILED)
 	{
 		ft_putstr_fd("Semaphore error\n", 2);
 		exit (1);
@@ -62,8 +54,6 @@ void	init_philos(t_data *data)
 	while (i < data->number_of_philo)
 	{
 		data->philos[i].id = i + 1;
-		data->philos[i].is_finished = 0;
-		data->philos[i].last_meal_time = 0;
 		data->philos[i].number_of_meals = 0;
 		data->philos[i].data = data;
 		i++;

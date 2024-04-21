@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/19 20:34:36 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:21:10 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,13 @@ long	ft_atoi(const char *str);
 int		ft_isdigit(int c);
 int		ft_strcmp(const char *str1, const char *str2);
 int		ft_strlen(const char *str);
+int		ft_strlen_2(char *str);
 char	*ft_trim(char *str);
 void	ft_putstr_fd(char *s, int fd);
 
 //parsing
 int		parsing(char **argv);
+int		check_for_zeros(char *str);
 
 //init variables
 int		init_variables(t_data *data, char **argv);

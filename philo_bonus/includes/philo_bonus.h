@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:21:05 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/20 12:08:03 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:21:31 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ typedef struct s_philo
 	pthread_t		monitor;
 	pthread_t		eat;
 	int				number_of_meals;
-	int				is_finished;
-	size_t			last_meal_time;
 	t_data			*data;
 }	t_philo;
 
@@ -46,16 +44,12 @@ typedef struct s_data
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
 	int				nbr_time_must_eat;
-	int				is_someone_died;
 	size_t			started_time;
 	t_philo			*philos;
 	pid_t			*pid_philos;
 	sem_t			*wr_sem;
-	sem_t			*dead_sem;
-	sem_t			*meals_sem;
-	sem_t			*sem;
 	sem_t			*forks;
-	int				nbr_philo_finished;
+	struct timeval	start_eating;
 }	t_data;
 
 //tools
@@ -63,6 +57,7 @@ long	ft_atoi(const char *str);
 int		ft_isdigit(int c);
 int		ft_strcmp(const char *str1, const char *str2);
 int		ft_strlen(const char *str);
+int		ft_strlen_2(char *str);
 char	*ft_trim(char *str);
 void	ft_putstr_fd(char *s, int fd);
 
@@ -100,6 +95,5 @@ void	*observation_routine(void *arg);
 //time utils
 size_t	get_current_time(void);
 int		ft_usleep(size_t milliseconds);
-void set_last_meal_time(t_philo *philo, size_t time);
 
 #endif

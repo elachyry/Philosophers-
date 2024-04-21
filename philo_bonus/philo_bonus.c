@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 04:10:38 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/25 03:16:07 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/21 21:58:45 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/philo_bonus.h"
 
-int	main(int argc, char **argv)
+int	main_2(int argc, char **argv)
 {
 	t_data	data;
 
@@ -25,5 +25,14 @@ int	main(int argc, char **argv)
 	init_variables(&data, argv);
 	start_program(&data);
 	free_data(&data);
+	system("leaks philo_bonus");
 	return (0);
+}
+
+
+int	main(int argc, char **argv)
+{
+	main_2( argc ,argv);
+	system("leaks philo_bonus");
+	
 }

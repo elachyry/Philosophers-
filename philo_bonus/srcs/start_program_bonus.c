@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 05:03:47 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/19 14:42:47 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/21 15:36:34 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,17 @@ void	child_process(t_data *data, int i)
 		}
 		if (data->philos[i].id % 2 == 0)
 			ft_usleep(60);
-		while (!data->philos[i].is_finished)
+		while (1)
 		{
 			philo_eating(data, i);
 			philo_sleeping(&data->philos[i]);
 			philo_thinking(&data->philos[i]);
 		}
-		pthread_join(data->philos[i].monitor, NULL);
+		if (pthread_join(data->philos[i].monitor, NULL) != 0)
+		{
+			ft_putstr_fd("Thread join error\n", 2);
+			exit(1);
+		}
 		exit(0);
 	}
 }
@@ -49,7 +53,6 @@ void	create_philos(t_data *data)
 			ft_putstr_fd("Fork error\n", 2);
 			exit(1);
 		}
-		data->philos[i].last_meal_time = get_current_time();
 		child_process(data, i);
 		i++;
 	}

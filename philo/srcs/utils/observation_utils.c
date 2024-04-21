@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:34:31 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/19 20:36:33 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/21 15:58:44 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_if_somone_died(t_philo *philo)
 	lock_mutex(&philo->data->mutex_5);
 	if (philo->is_finished == 1)
 	{
-		unlock_mutex(&philo->data->mutex_5);	
+		unlock_mutex(&philo->data->mutex_5);
 		return (0);
 	}
 	unlock_mutex(&philo->data->mutex_5);
@@ -49,11 +49,30 @@ int	check_if_somone_died(t_philo *philo)
 	return (0);
 }
 
+void	help_func(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	unlock_mutex(&data->mutex_6);
+	while (1)
+	{
+		lock_mutex(&data->mutex_6);
+		if (!(++i < data->number_of_philo && !data->is_someone_died))
+		{
+			unlock_mutex(&data->mutex_6);
+			break ;
+		}
+		if (check_if_somone_died(data->philos + i))
+			philo_died(data->philos + i);
+		unlock_mutex(&data->mutex_6);
+	}
+}
+
 void	*observation_routine(void *arg)
 {
 	t_data	*data;
 	int		result;
-	int		i;
 
 	data = (t_data *)arg;
 	result = 0;
@@ -74,20 +93,7 @@ void	*observation_routine(void *arg)
 			unlock_mutex(&data->mutex_6);
 			break ;
 		}
-		unlock_mutex(&data->mutex_6);
-		i = -1;
-		while (1)
-		{
-			lock_mutex(&data->mutex_6);
-			if (!(++i < data->number_of_philo && !data->is_someone_died))
-			{
-				unlock_mutex(&data->mutex_6);
-				break;
-			}
-			if (check_if_somone_died(data->philos + i))
-				philo_died(data->philos + i);
-			unlock_mutex(&data->mutex_6);
-		}
+		help_func(data);
 	}
 	return (NULL);
 }

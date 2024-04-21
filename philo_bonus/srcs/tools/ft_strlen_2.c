@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_strlen_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 15:15:01 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/23 01:35:41 by melachyr         ###   ########.fr       */
+/*   Created: 2023/11/06 17:33:00 by melachyr          #+#    #+#             */
+/*   Updated: 2024/04/21 17:28:34 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philo_bonus.h"
 
-int	ft_isdigit(int c)
+int	ft_strlen_2(char *str)
 {
-	if (c >= 48 && c <= 57)
-		return (1);
-	return (0);
+	int	i;
+
+	i = 0;
+	if (*str == '+' || *str == '-')
+		str++;
+	while (*str == '0')
+		str++;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }

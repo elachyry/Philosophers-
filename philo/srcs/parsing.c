@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melachyr <melachyr@student.1337.com>       +#+  +:+       +#+        */
+/*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 01:11:48 by melachyr          #+#    #+#             */
-/*   Updated: 2024/03/21 07:44:43 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:49:31 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,27 @@ int	check_for_non_numbers(char **argv)
 
 int	check_for_int_max(char **argv)
 {
-	if (ft_strlen(argv[2]) > 10 || ft_strlen(argv[3]) > 10
-		|| ft_strlen(argv[4]) > 10)
+	if (ft_strlen_2(argv[2]) > 10 || ft_strlen_2(argv[3]) > 10
+		|| ft_strlen_2(argv[4]) > 10)
 	{
-		ft_putstr_fd("Time_to_die or time_to_eat or time_to_sleep\
-		values cannot be lower than 0 or higher than INT_MAX!\n", 2);
+		ft_putstr_fd("Time_to_die or time_to_eat or time_to_sleep \
+values cannot be lower than 0 or higher than INT_MAX!\n", 2);
 		return (0);
 	}
 	if (argv[5] != NULL)
 	{
-		if (ft_strlen(argv[5]) > 10)
+		if (ft_strlen_2(argv[5]) > 10)
 		{
-			ft_putstr_fd("Number_of_times_each_philosopher_must_eat\
-			value cannot be lower than 0 or higher than INT_MAX!\n", 2);
+			ft_putstr_fd("Number_of_times_each_philosopher_must_eat \
+value cannot be lower than 0 or higher than INT_MAX!\n", 2);
 			return (0);
 		}
 	}
 	if (ft_atoi(argv[2]) > INT_MAX || ft_atoi(argv[3]) > INT_MAX
 		|| ft_atoi(argv[4]) > INT_MAX)
 	{
-		ft_putstr_fd("Time_to_die or time_to_eat or time_to_sleep\
-		values cannot be higher than INT_MAX!\n", 2);
+		ft_putstr_fd("Time_to_die or time_to_eat or time_to_sleep \
+values cannot be higher than INT_MAX!\n", 2);
 		return (0);
 	}
 	return (1);
@@ -80,7 +80,7 @@ int	check_for_negative(char **argv)
 		if (ft_atoi(argv[5]) < 0)
 		{
 			ft_putstr_fd("Number_of_times_each_philosopher_must_eat value \
-			cannot be lower than 0!\n", 2);
+cannot be lower than 0!\n", 2);
 			return (0);
 		}
 	}
@@ -107,7 +107,7 @@ int	parsing(char **argv)
 		|| ft_atoi(argv[4]) < 60)
 	{
 		ft_putstr_fd("Time_to_die or time_to_eat or time_to_sleep values \
-		cannot be lower than 60 ms!\n", 2);
+cannot be lower than 60 ms!\n", 2);
 		return (0);
 	}
 	return (1);

@@ -6,17 +6,14 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:34:29 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/19 20:46:12 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:27:31 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	*philos_routine(void *arg)
+void	wait_for_threads(t_philo	*philo)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
 	while (1)
 	{
 		lock_mutex(&philo->data->mutex_2);
@@ -28,9 +25,16 @@ void	*philos_routine(void *arg)
 		unlock_mutex(&philo->data->mutex_2);
 	}
 	philo->last_meal_time = get_current_time();
-	if (!increment_int_mutex(&philo->data->mutex,
-			&philo->data->running_threads, 1))
-		return ((void *)-1);
+	increment_int_mutex(&philo->data->mutex,
+		&philo->data->running_threads, 1);
+}
+
+void	*philos_routine(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	wait_for_threads(philo);
 	if (philo->id % 2 == 0)
 		ft_usleep(60);
 	while (1)
@@ -39,7 +43,7 @@ void	*philos_routine(void *arg)
 		if (philo->data->is_someone_died)
 		{
 			unlock_mutex(&philo->data->mutex_3);
-			break;
+			break ;
 		}
 		unlock_mutex(&philo->data->mutex_3);
 		if (philo->is_finished)
@@ -57,21 +61,19 @@ void	*one_philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	wait_for_threads(philo);
+	philo_taken_fork_printing(philo);
 	while (1)
 	{
-		lock_mutex(&philo->data->mutex_2);
-		if (philo->data->is_all_thread_created)
+		lock_mutex(&philo->data->mutex_3);
+		if (philo->data->is_someone_died)
 		{
-			unlock_mutex(&philo->data->mutex_2);
+			unlock_mutex(&philo->data->mutex_3);
 			break ;
 		}
-		unlock_mutex(&philo->data->mutex_2);
-	}
-	philo->last_meal_time = get_current_time();
-	philo->data->running_threads++;
-	philo_taken_fork_printing(philo);
-	while (!philo->data->is_someone_died)
+		unlock_mutex(&philo->data->mutex_3);
 		usleep(200);
+	}
 	return (NULL);
 }
 
