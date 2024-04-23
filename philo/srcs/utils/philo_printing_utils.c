@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:46:44 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/19 20:17:59 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:40:19 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	philo_taken_fork_printing(t_philo *philo)
 		return ;
 	}
 	unlock_mutex(&philo->data->mutex_3);
-	time_stamp = get_current_time() - philo->data->started_time;
 	lock_mutex(&philo->philo_mutex);
+	time_stamp = get_current_time() - philo->data->started_time;
 	printf("%zu %d has taken a fork\n", time_stamp, philo->id);
 	unlock_mutex(&philo->philo_mutex);
 }
@@ -40,8 +40,8 @@ void	philo_eating_printing(t_philo *philo)
 		return ;
 	}
 	unlock_mutex(&philo->data->mutex_3);
-	time_stamp = get_current_time() - philo->data->started_time;
 	lock_mutex(&philo->philo_mutex);
+	time_stamp = get_current_time() - philo->data->started_time;
 	printf("%zu %d is eating\n", time_stamp, philo->id);
 	unlock_mutex(&philo->philo_mutex);
 }
@@ -57,8 +57,8 @@ void	philo_sleeping_printing(t_philo *philo)
 		return ;
 	}
 	unlock_mutex(&philo->data->mutex_3);
-	time_stamp = get_current_time() - philo->data->started_time;
 	lock_mutex(&philo->philo_mutex);
+	time_stamp = get_current_time() - philo->data->started_time;
 	printf("%zu %d is sleeping\n", time_stamp, philo->id);
 	unlock_mutex(&philo->philo_mutex);
 }
@@ -74,8 +74,8 @@ void	philo_thinking_printing(t_philo *philo)
 		return ;
 	}
 	unlock_mutex(&philo->data->mutex_3);
-	time_stamp = get_current_time() - philo->data->started_time;
 	lock_mutex(&philo->philo_mutex);
+	time_stamp = get_current_time() - philo->data->started_time;
 	printf("%zu %d is thinking\n", time_stamp, philo->id);
 	unlock_mutex(&philo->philo_mutex);
 }
@@ -91,8 +91,8 @@ void	philo_died_printing(t_philo *philo)
 		return ;
 	}
 	unlock_mutex(&philo->data->mutex_3);
-	time_stamp = get_current_time() - philo->data->started_time;
 	lock_mutex(&philo->philo_mutex);
+	time_stamp = get_current_time() - philo->data->started_time;
 	printf("%zu %d died\n", time_stamp, philo->id);
 	unlock_mutex(&philo->philo_mutex);
 }

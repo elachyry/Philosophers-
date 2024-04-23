@@ -6,7 +6,7 @@
 /*   By: melachyr <melachyr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 17:28:52 by melachyr          #+#    #+#             */
-/*   Updated: 2024/04/21 15:29:33 by melachyr         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:28:55 by melachyr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	init_philos(t_data *data)
 	data->pid_philos = malloc(sizeof(pid_t) * data->number_of_philo);
 	if (data->philos == NULL || data->pid_philos == NULL)
 	{
-		ft_putstr_fd("Malloc error\n", 2);
+		ft_putstr_fd("malloc error\n", 2);
 		exit(1);
 	}
 	i = 0;
@@ -66,7 +66,7 @@ void	init_variables(t_data *data, char **argv)
 	if (data->nbr_time_must_eat == 0)
 	{
 		ft_putstr_fd("Number_of_times_each_philosopher_must_eat\
-		value cannot be lower than 0!\n", 2);
+value cannot be lower than 0!\n", 2);
 		exit(1);
 	}
 	init_philos(data);
